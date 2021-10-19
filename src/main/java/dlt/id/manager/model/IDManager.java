@@ -28,6 +28,9 @@ public class IDManager implements IIDManagerService {
         }
     }
 
+    public void stop() {
+    }
+
     @Override
     public String getIP() {
         return this.ip;
