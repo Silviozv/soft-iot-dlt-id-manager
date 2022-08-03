@@ -23,6 +23,9 @@ public class IDManager implements IIDManagerService {
     public void start() {
         try {
             this.ip = InetAddress.getLocalHost().getHostAddress().trim();
+            this.id = UUID.randomUUID().toString();
+
+            System.out.println("IP: " + this.ip);
         } catch (UnknownHostException ex) {
             Logger.getLogger(IDManager.class.getName()).log(Level.SEVERE, null, ex);
         }
