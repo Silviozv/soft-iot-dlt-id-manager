@@ -11,13 +11,6 @@
     <name>SOFT-IoT-DLT-ID-Manager</name>
     <description>SOFT-IoT-DLT-ID-Manager OSGi blueprint bundle project.</description>
 
-    <dependencies>
-        <dependency>
-            <groupId>network.idu.acapy</groupId>
-            <artifactId>aries-client-python</artifactId>
-            <version>0.7.11</version>
-        </dependency>
-    </dependencies>
     <build>
         <plugins>
             <plugin>
@@ -29,12 +22,11 @@
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
-                        <Embed-Dependency>aries-client-python</Embed-Dependency>
                         <Export-Package>
                             dlt.id.manager*;version=${project.version}
                         </Export-Package>
                         <Import-Package>
-                            org.hyperledger.*;
+                            *
                         </Import-Package>
                     </instructions>
                 </configuration>
