@@ -43,7 +43,5 @@ jobs:
                 }
               }
             ]
-      - name: Show .m2 folder
-        run: ls ~/.m2
       - name: Deploy to Maven Repository
-        run: mvn clean deploy -X --no-transfer-progress
+        run: mvn clean deploy --no-transfer-progress
