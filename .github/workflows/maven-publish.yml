@@ -36,4 +36,4 @@ jobs:
       - name: Deploy to Maven Repository
         env:
           GPG_KEYNAME: ${{ secrets.GPG_PRIV_KEY }}
-        run: mvn clean deploy -X --no-transfer-progress
+        run: mvn clean deploy --no-transfer-progress
