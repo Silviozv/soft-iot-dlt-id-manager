@@ -32,7 +32,6 @@ jobs:
               "username": "${{ secrets.MVN_USERNAME }}",
               "password": "${{ secrets.MVN_PASSWORD }}"
             }]
-          properties: '[{"gpg.executable": "gpg"}, {"gpg.keyname": "@{{ secrets.GPG_PRIV_KEY }}"}]'
 
       - name: Deploy to Maven Repository
-        run: mvn clean deploy -X
+        run: mvn clean deploy -X --no-transfer-progress -Dgpg.keyname=123test
