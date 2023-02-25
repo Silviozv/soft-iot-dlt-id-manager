@@ -23,15 +23,28 @@ jobs:
           distribution: 'adopt'
 
       - name: Build settings.xml file
-        uses: s4u/maven-settings-action@v2.8.0
+        uses: whelk-io/maven-settings-xml-action@v20
         with:
-          githubServer: false
-          servers: |
-            [{
-              "id": "ossrh",
-              "username": "${{ secrets.MVN_USERNAME }}",
-              "password": "${{ secrets.MVN_PASSWORD }}"
-            }]
+          servers: >
+            [
+              {
+                "id": "ossrh",
+                "username": "${{secrets.MVN_USERNAME}}",
+                "password": "${{secrets.MVN_PASSWORD}}",
+              }
+            ]
+          profiles: >
+            [
+              {
+                "id": "ossrh",
 
+                "properties": {
+                  "gpg.executable": "gpg",
+                  "gpg.keyname": "${{secrets.GPG_PRIV_KEY}}"
+                }
+              }
+            ]
+      - name: Show .m2 folder
+        run: ls ~/.m2
       - name: Deploy to Maven Repository
-        run: mvn clean deploy -X --no-transfer-progress -Dgpg.keyname=123test
+        run: mvn clean deploy -X --no-transfer-progress
