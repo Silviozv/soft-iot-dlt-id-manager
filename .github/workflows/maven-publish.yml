@@ -30,14 +30,13 @@ jobs:
               {
                 "id": "ossrh",
                 "username": "${{secrets.MVN_USERNAME}}",
-                "password": "${{secrets.MVN_PASSWORD}}",
+                "password": "${{secrets.MVN_PASSWORD}}"
               }
             ]
           profiles: >
             [
               {
                 "id": "ossrh",
-
                 "properties": {
                   "gpg.executable": "gpg",
                   "gpg.keyname": "${{secrets.GPG_PRIV_KEY}}"
