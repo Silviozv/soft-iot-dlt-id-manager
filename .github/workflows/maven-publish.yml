@@ -33,6 +33,8 @@ jobs:
                 "password": "${{secrets.MVN_PASSWORD}}"
               }
             ]
-
+      - name: Use environment variable in a step
+        env:
+          GPG_KEYNAME: ${{ secrets.GPG_PRIV_KEY }}
       - name: Deploy to Maven Repository
-        run: mvn clean deploy -X --no-transfer-progress -Dgpg.keyname=${{secrets.GPG_PRIV_KEY}}
+        run: mvn clean deploy -X --no-transfer-progress

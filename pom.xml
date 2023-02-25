@@ -99,7 +99,7 @@
                         <goal>sign</goal>
                     </goals>
                     <configuration>
-                        <keyname>${gpg.keyname}</keyname>
+                        <keyname>${env.GPG_KEYNAME}</keyname>
                     </configuration>
                     </execution>
                 </executions>
