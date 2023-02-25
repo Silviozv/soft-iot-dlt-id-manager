@@ -33,15 +33,6 @@ jobs:
                 "password": "${{secrets.MVN_PASSWORD}}"
               }
             ]
-          profiles: >
-            [
-              {
-                "id": "ossrh",
-                "properties": {
-                  "gpg.executable": "gpg",
-                  "gpg.keyname": "${{secrets.GPG_PRIV_KEY}}"
-                }
-              }
-            ]
+
       - name: Deploy to Maven Repository
-        run: mvn clean deploy --no-transfer-progress
+        run: mvn clean deploy --no-transfer-progress -Dgpg.keyname=${{secrets.GPG_PRIV_KEY}}
