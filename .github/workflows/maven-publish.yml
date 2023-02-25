@@ -35,4 +35,4 @@ jobs:
             ]
 
       - name: Deploy to Maven Repository
-        run: mvn clean deploy --no-transfer-progress -Dgpg.keyname=${{secrets.GPG_PRIV_KEY}}
+        run: mvn clean deploy -X --no-transfer-progress -Dgpg.keyname=${{secrets.GPG_PRIV_KEY}}
