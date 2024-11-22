@@ -23,11 +23,11 @@ public class IDManager implements IIDManagerService {
 
     public void start() {
         try {
-            this.ip = InetAddress.getLocalHost().getHostAddress().trim();
+            this.ip = this.getEnvOrDefault("GATEWAY_REAL_IP", InetAddress.getLocalHost().getHostAddress().trim());
             this.id = UUID.randomUUID().toString();
             this.log = Logger.getLogger(IDManager.class.getName());
 
-            this.log.info("IP: " + this.ip);
+            this.log.log(Level.INFO, "IP: {0}", this.ip);
         } catch (UnknownHostException ex) {
             Logger.getLogger(IDManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -44,6 +44,11 @@ public class IDManager implements IIDManagerService {
     @Override
     public String getID() {
         return this.id;
+    }
+    
+    private String getEnvOrDefault(String env, String defaultValue){
+        String value = System.getenv(env);
+        return value == null ? defaultValue : value;
     }
 
 }
