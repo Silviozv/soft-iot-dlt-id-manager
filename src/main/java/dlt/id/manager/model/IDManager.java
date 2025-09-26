@@ -1,8 +1,14 @@
 package dlt.id.manager.model;
 
 import dlt.id.manager.services.IIDManagerService;
+
+import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,7 +29,7 @@ public class IDManager implements IIDManagerService {
 
     public void start() {
         try {
-            this.ip = this.getEnvOrDefault("GATEWAY_REAL_IP", InetAddress.getLocalHost().getHostAddress().trim());
+            this.ip = this.getEnvOrDefault("GATEWAY_REAL_IP", getContainerIPAddress());
             this.id = UUID.randomUUID().toString();
             this.log = Logger.getLogger(IDManager.class.getName());
 
@@ -49,6 +55,24 @@ public class IDManager implements IIDManagerService {
     private String getEnvOrDefault(String env, String defaultValue){
         String value = System.getenv(env);
         return value == null ? defaultValue : value;
+    }
+
+    /**
+     * Recupera o IP válido do container (geralmente eth0 no Docker/Fogbed).
+     */
+    private String getContainerIPAddress() throws SocketException {
+        Enumeration<NetworkInterface> nets = NetworkInterface.getNetworkInterfaces();
+        for (NetworkInterface netint : Collections.list(nets)) {
+            if (netint.isLoopback() || !netint.isUp()) continue;
+
+            Enumeration<InetAddress> inetAddresses = netint.getInetAddresses();
+            for (InetAddress inetAddress : Collections.list(inetAddresses)) {
+                if (inetAddress instanceof Inet4Address) {
+                    return inetAddress.getHostAddress(); // Retorna o primeiro IP válido
+                }
+            }
+        }
+        return "127.0.0.1"; // fallback
     }
 
 }
